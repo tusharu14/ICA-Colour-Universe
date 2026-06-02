@@ -142,6 +142,17 @@
       cursor: pointer;
       white-space: nowrap;
       font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .chipdot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      flex: 0 0 auto;
+      background: var(--swatch, #8a6d47);
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.75);
     }
     .chip[aria-pressed="true"] {
       background: #171717;
@@ -328,15 +339,44 @@
     }
     @media (max-width: 640px) {
       .topbar-inner, .chips, .content, .footerhint { padding-left: 14px; padding-right: 14px; }
-      .brand-row { align-items: flex-start; flex-direction: column; }
+      .topbar-inner { padding-top: 14px; padding-bottom: 10px; }
+      .brand-row { align-items: flex-start; flex-direction: column; gap: 10px; }
       .brand img { height: 48px; }
+      .actions {
+        width: 100%;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 8px;
+        padding-bottom: 2px;
+        scrollbar-width: none;
+      }
+      .actions::-webkit-scrollbar { display: none; }
+      .button, .pill { flex: 0 0 auto; }
       .grid { gap: 10px; }
       .card { min-height: 210px; border-radius: 20px; }
       .swatch { min-height: 150px; }
       .details { padding: 12px; min-height: 80px; }
       .code { font-size: 16px; }
       .name { font-size: 12px; }
-      .filterbar { grid-template-columns: 1fr; gap: 10px; }
+      .filterbar {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding: 2px 0 6px;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
+      }
+      .filterbar::-webkit-scrollbar { display: none; }
+      .filterbar .field {
+        flex: 0 0 min(82vw, 240px);
+        scroll-snap-align: start;
+      }
+      .filterbar .field label {
+        margin-left: 8px;
+        font-size: 10px;
+      }
+      .select-wrap::after { top: 33px; right: 16px; }
       .smallmeta { display: none; }
     }
   </style>
@@ -612,8 +652,8 @@
       families.forEach(name => {
         const b = document.createElement('button');
         b.className = 'chip';
-        b.textContent = name;
         b.setAttribute('aria-pressed', String(state.family === name));
+        b.innerHTML = `<span class="chipdot" style="background:${familyColor(name)}"></span><span>${escapeHtml(name)}</span>`;
         b.addEventListener('click', () => {
           state.family = name;
           updateChips();
@@ -840,7 +880,6 @@
 
     renderFamilyChips();
     rerender(true);
-    if (state.visible[0]) activateItem(0);
   })();
   </script>
 </body>

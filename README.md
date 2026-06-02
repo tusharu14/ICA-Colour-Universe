@@ -18,3 +18,6 @@ Files:
 - GitHub Pages looks for an `index.html` entry file in the publishing source. citeturn333007view0
 - On GitHub Free, Pages is available for public repositories. citeturn333007view0
 - A public repository is required for a site on GitHub Free. citeturn333007view0
+
+
+Updated for mobile-first browsing: no default shade selection on load and a horizontal filter carousel on phones.
