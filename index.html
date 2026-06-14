@@ -44,7 +44,17 @@
     .topbar-inner {
       max-width: 1600px;
       margin: 0 auto;
-      padding: 18px 18px 14px;
+      padding: 14px 18px 12px;
+    }
+    .disclaimer {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 10px 18px 0;
+      font-size: 12px;
+      line-height: 1.55;
+      color: #6f675f;
+      letter-spacing: 0.01em;
+      font-style: italic;
     }
     .brand-row {
       display: flex;
@@ -54,17 +64,17 @@
       margin-bottom: 14px;
     }
     .brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
-    .brand img { height: 54px; width: auto; display: block; object-fit: contain; }
+    .brand img { height: 72px; width: auto; display: block; object-fit: contain; }
     .title-wrap { min-width: 0; }
     .title {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(26px, 3.2vw, 42px);
+      font-size: clamp(24px, 2.4vw, 34px);
       line-height: 1;
       letter-spacing: 0.02em;
       margin: 0;
       font-weight: 500;
     }
-    .subtitle { margin-top: 6px; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+    .subtitle { margin-top: 3px; font-size: 10px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--muted); }
     .actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
     .pill, .button, .input, select {
       border: 1px solid rgba(22,22,22,0.10);
@@ -154,7 +164,7 @@
       margin: 0 auto;
       padding: 18px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 380px;
+      grid-template-columns: minmax(0, 1fr) 320px;
       gap: 18px;
       align-items: start;
     }
@@ -229,7 +239,7 @@
 
     .sidebar {
       position: sticky;
-      top: 190px;
+      top: 208px;
       border-radius: 28px;
       background: rgba(255,255,255,0.74);
       backdrop-filter: blur(18px);
@@ -237,20 +247,20 @@
       box-shadow: var(--shadow);
       overflow: hidden;
     }
-    .inspector { padding: 18px; }
-    .inspector h2 { margin: 0; font-size: 22px; font-family: Georgia, serif; font-weight: 500; line-height: 1.1; }
+    .inspector { padding: 16px; }
+    .inspector h2 { margin: 0; font-size: 20px; font-family: Georgia, serif; font-weight: 500; line-height: 1.1; }
     .inspector .lead { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
     .hero-swatch {
       margin-top: 16px;
       border-radius: 22px;
-      height: 210px;
+      height: 180px;
       background: var(--hero, #ddd);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25), 0 20px 44px rgba(0,0,0,0.12);
     }
-    .inspector-grid { display: grid; gap: 10px; margin-top: 16px; }
+    .inspector-grid { display: grid; gap: 10px; margin-top: 14px; }
     .kv {
       display: grid;
-      grid-template-columns: 120px 1fr;
+      grid-template-columns: 104px 1fr;
       gap: 10px;
       align-items: start;
       font-size: 13px;
@@ -259,7 +269,7 @@
     }
     .kv:last-child { border-bottom: 0; padding-bottom: 0; }
     .kv div:first-child { color: var(--muted); text-transform: uppercase; letter-spacing: 0.14em; font-size: 10px; padding-top: 2px; }
-    .copyrow { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .copyrow { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
     .copybtn {
       border: 1px solid rgba(22,22,22,0.10);
       background: #fff;
@@ -327,9 +337,10 @@
       .actions { justify-content: flex-start; }
     }
     @media (max-width: 640px) {
-      .topbar-inner, .chips, .content, .footerhint { padding-left: 14px; padding-right: 14px; }
+      .topbar-inner, .chips, .content, .footerhint, .disclaimer { padding-left: 14px; padding-right: 14px; }
       .brand-row { align-items: flex-start; flex-direction: column; }
-      .brand img { height: 48px; }
+      .brand img { height: 58px; }
+      .title { font-size: clamp(22px, 8vw, 30px); }
       .grid { gap: 10px; }
       .card { min-height: 210px; border-radius: 20px; }
       .swatch { min-height: 150px; }
@@ -345,6 +356,8 @@
   <div class="shell">
     <header class="topbar">
       <div class="topbar-inner">
+        <div class="disclaimer">Actual shade appearance may vary based on light, sheen and other conditions;
+This representation is for indicative purposes only. Kindly contact your sales representative to request for samples and shade cards before selecting a colour.</div>
         <div class="brand-row">
           <div class="brand">
             <img src="logo.png" alt="ICA Professionale logo" />
@@ -452,91 +465,71 @@
 
 const FAMILY_ORDER = [
   'Whites & Neutrals',
+  'Greys & Charcoal',
+  'Warm Earths',
   'Yellows & Golds',
-  'Oranges & Browns',
   'Reds & Pinks',
   'Purples & Violets',
   'Blues & Teals',
   'Greens & Olives',
-  'Greys & Charcoal',
 ];
 
 const FAMILY_COLORS = {
   'All': '#171717',
   'Whites & Neutrals': '#d9d2c7',
+  'Greys & Charcoal': '#6f6b66',
+  'Warm Earths': '#a56d46',
   'Yellows & Golds': '#d8b132',
-  'Oranges & Browns': '#b56e43',
   'Reds & Pinks': '#c25357',
   'Purples & Violets': '#8d6bb4',
   'Blues & Teals': '#558ab5',
   'Greens & Olives': '#6b8b53',
-  'Greys & Charcoal': '#6f6b66',
 };
 
-function normText(value) {
-  return String(value || '')
-    .toLowerCase()
-    .replace(/&/g, ' and ')
-    .replace(/[-_/]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function hasAny(text, terms) {
-  return terms.some(term => text.includes(term));
-}
-
-function deriveFamily(item) {
-  const name = normText(item.colourName);
-  const code = normText(item.colorCode);
-  const text = `${name} ${code}`.trim();
-
-  const isGrey = hasAny(text, ['grey', 'gray', 'ash', 'slate', 'charcoal', 'smoke', 'graphite', 'steel', 'iron', 'cement', 'lead', 'shadow', 'dust', 'black']);
-  if (isGrey) return 'Greys & Charcoal';
-
-  const isWhite = hasAny(text, ['white', 'ivory', 'cream', 'beige', 'linen', 'pearl', 'porcelain', 'chalk', 'mist', 'cloud', 'bone', 'paper', 'snow', 'milk', 'shell', 'ecru', 'vanilla', 'neutral', 'taupe', 'stone', 'sand', 'putty', 'mushroom', 'biscuit', 'off white', 'offwhite']);
-  if (isWhite) return 'Whites & Neutrals';
-
-  const candidates = [
-    ['Yellows & Golds', ['yellow', 'gold', 'primrose', 'lemon', 'saffron', 'mustard', 'ochre', 'daffodil', 'marigold']],
-    ['Oranges & Browns', ['orange', 'apricot', 'peach', 'terracotta', 'rust', 'copper', 'clay', 'brick', 'tan', 'caramel', 'cocoa', 'brown', 'walnut', 'teak', 'oak', 'chestnut', 'mocha', 'coffee', 'umber', 'sienna', 'hazel', 'camel', 'desert']],
-    ['Reds & Pinks', ['red', 'pink', 'rose', 'coral', 'blush', 'berry', 'cherry', 'burgundy', 'maroon', 'salmon', 'crimson', 'ruby', 'fuchsia']],
-    ['Purples & Violets', ['purple', 'violet', 'lilac', 'mauve', 'plum', 'orchid', 'lavender', 'magenta']],
-    ['Blues & Teals', ['blue', 'navy', 'azure', 'sky', 'cobalt', 'cerulean', 'teal', 'aqua', 'cyan', 'turquoise', 'indigo', 'ocean']],
-    ['Greens & Olives', ['green', 'olive', 'moss', 'sage', 'fern', 'leaf', 'mint', 'jade', 'emerald', 'pine', 'forest', 'lime', 'shamrock']],
-  ];
-
-  const hits = candidates
-    .map(([family, terms]) => ({ family, count: terms.filter(term => text.includes(term)).length }))
-    .filter(x => x.count > 0);
-
-  if (hits.length === 1) return hits[0].family;
-
-  const { r, g, b } = hexToRgb(item.hex);
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
   const max = Math.max(r, g, b), min = Math.min(r, g, b);
   const l = (max + min) / 2;
   const d = max - min;
-  let hue = 0;
-  let sat = 0;
-  if (d) {
-    sat = l > 127 ? d / (510 - max - min) : d / (max + min);
+  let h = 0;
+  let s = 0;
+  if (d !== 0) {
+    s = d / (1 - Math.abs(2 * l - 1));
     switch (max) {
-      case r: hue = ((g - b) / d + (g < b ? 6 : 0)); break;
-      case g: hue = ((b - r) / d + 2); break;
-      default: hue = ((r - g) / d + 4); break;
+      case r: h = ((g - b) / d + (g < b ? 6 : 0)); break;
+      case g: h = ((b - r) / d + 2); break;
+      default: h = ((r - g) / d + 4); break;
     }
-    hue *= 60;
+    h *= 60;
+  }
+  return { h, s, l };
+}
+
+function deriveFamily(item) {
+  const { r, g, b } = hexToRgb(item.hex);
+  const { h, s, l } = rgbToHsl(r, g, b);
+
+  if (l >= 0.82 && s <= 0.32) return 'Whites & Neutrals';
+  if (s <= 0.14) {
+    return l >= 0.68 ? 'Whites & Neutrals' : 'Greys & Charcoal';
+  }
+  if (s <= 0.22 && l < 0.68) {
+    if (h >= 20 && h < 55 && s > 0.16) return 'Warm Earths';
+    return 'Greys & Charcoal';
   }
 
-  if (l >= 78 && sat <= 0.24) return 'Whites & Neutrals';
-  if (sat <= 0.12 && l <= 74) return 'Greys & Charcoal';
-
-  if (hue < 20 || hue >= 345) return 'Reds & Pinks';
-  if (hue < 45) return 'Oranges & Browns';
-  if (hue < 78) return 'Yellows & Golds';
-  if (hue < 160) return 'Greens & Olives';
-  if (hue < 240) return 'Blues & Teals';
-  if (hue < 300) return 'Purples & Violets';
+  if (h < 18 || h >= 345) {
+    if (l < 0.60 && s < 0.68) return 'Warm Earths';
+    return 'Reds & Pinks';
+  }
+  if (h < 45) {
+    if (l < 0.64 || s < 0.48) return 'Warm Earths';
+    return 'Yellows & Golds';
+  }
+  if (h < 80) return 'Yellows & Golds';
+  if (h < 160) return 'Greens & Olives';
+  if (h < 245) return 'Blues & Teals';
+  if (h < 300) return 'Purples & Violets';
   return 'Reds & Pinks';
 }
 
@@ -817,7 +810,7 @@ function deriveFamily(item) {
       sheetInner.innerHTML = `
         <h2 style="font-family:Georgia,serif;font-weight:500;margin:0 0 8px;font-size:28px;">${escapeHtml(item.colorCode)}</h2>
         <p style="margin:0 0 12px;color:var(--muted);font-size:14px;line-height:1.6;">${name}</p>
-        <div class="hero-swatch" style="--hero:${item.hex};height:220px"></div>
+        <div class="hero-swatch" style="--hero:${item.hex};height:180px"></div>
         <div class="inspector-grid" style="margin-top:14px;">
           <div class="kv"><div>Shade Card</div><div>${escapeHtml(item.shadeCard)}</div></div>
           <div class="kv"><div>Color Code</div><div>${escapeHtml(item.colorCode)}</div></div>
@@ -915,7 +908,6 @@ function deriveFamily(item) {
 
     renderFamilyChips();
     rerender(true);
-    if (state.visible[0]) activateItem(0);
   })();
   </script>
 </body>
