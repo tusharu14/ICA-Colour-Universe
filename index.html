@@ -590,35 +590,64 @@ function labToChromaHue(lab) {
   return { c, h };
 }
 
-function deriveFamily(item) {
-  const lab = hexToLab(item.hex);
-  const { l, c, h } = labToChromaHue(lab);
+function hexToHsl(hex) {
+  const { r, g, b } = hexToRgb(hex);
+  const rn = r / 255;
+  const gn = g / 255;
+  const bn = b / 255;
+  const max = Math.max(rn, gn, bn);
+  const min = Math.min(rn, gn, bn);
+  const delta = max - min;
+  let h = 0;
+  let s = 0;
+  const l = (max + min) / 2;
 
-  if (c < 7.5) {
-    return l >= 72 ? 'Whites & Neutrals' : 'Greys & Blacks';
+  if (delta !== 0) {
+    s = l > 0.5 ? delta / (2 - max - min) : delta / (max + min);
+    switch (max) {
+      case rn:
+        h = ((gn - bn) / delta + (gn < bn ? 6 : 0)) * 60;
+        break;
+      case gn:
+        h = ((bn - rn) / delta + 2) * 60;
+        break;
+      default:
+        h = ((rn - gn) / delta + 4) * 60;
+        break;
+    }
   }
 
-  // Keep hue bands broad for an intuitive catalogue; warm yellows stay in yellow.
-  if (h >= 344 || h < 20) return 'Reds & Pinks';
-  if (h >= 20 && h < 45) return 'Oranges & Browns';
-  if (h >= 45 && h < 90) return 'Yellows & Golds';
-  if (h >= 90 && h < 170) return 'Greens & Olives';
-  if (h >= 170 && h < 255) return 'Blues & Teals';
-  if (h >= 255 && h < 344) return 'Purples & Violets';
-  return 'Reds & Pinks';
+  return { h, s, l };
+}
+
+function deriveFamily(item) {
+  const { h, s, l } = hexToHsl(item.hex);
+
+  // Very pale or almost neutral shades stay in the neutral family.
+  if (l >= 0.80 && s <= 0.38) return 'Whites & Neutrals';
+  if (s <= 0.12) return l >= 0.72 ? 'Whites & Neutrals' : 'Greys & Blacks';
+
+  // Hue-driven families with a slightly stricter split so pinks, browns and yellows do not bleed into each other.
+  if (h < 18 || h >= 345) return 'Reds & Pinks';
+  if (h >= 18 && h < 42) return (l < 0.58 || s < 0.48) ? 'Oranges & Browns' : 'Yellows & Golds';
+  if (h >= 42 && h < 78) return 'Yellows & Golds';
+  if (h >= 78 && h < 168) return 'Greens & Olives';
+  if (h >= 168 && h < 248) return 'Blues & Teals';
+  if (h >= 248 && h < 345) return 'Purples & Violets';
+
+  return l >= 0.72 ? 'Whites & Neutrals' : 'Greys & Blacks';
 }
 
 function deriveCharacter(item) {
-  const lab = hexToLab(item.hex);
-  const { l, c, h } = labToChromaHue(lab);
+  const { h, s, l } = hexToHsl(item.hex);
 
-  if (c < 7.5) return 'Neutral';
-  if (l >= 80 && c < 34) return 'Pastel';
-  if (l <= 35 && c >= 12) return 'Deep';
-  if (h >= 20 && h < 95 && c < 34 && l < 70) return 'Earthy';
-  if (c < 18) return 'Muted';
-  if (c >= 36 && l >= 40 && l <= 78) return 'Vibrant';
-  return (h >= 25 && h < 185) ? 'Warm' : 'Cool';
+  if (s <= 0.12) return 'Neutral';
+  if (l >= 0.82 && s < 0.35) return 'Pastel';
+  if (l <= 0.34 && s >= 0.18) return 'Deep';
+  if (h >= 18 && h < 92 && l < 0.68 && s < 0.52) return 'Earthy';
+  if (s < 0.22) return 'Muted';
+  if (s >= 0.45 && l >= 0.42 && l <= 0.80) return 'Vibrant';
+  return (h >= 28 && h < 210) ? 'Warm' : 'Cool';
 }
 
     const families = ['All', ...FAMILY_ORDER];
