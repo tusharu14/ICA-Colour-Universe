@@ -44,14 +44,14 @@
     .topbar-inner {
       max-width: 1600px;
       margin: 0 auto;
-      padding: 14px 18px 12px;
+      padding: 10px 18px 8px;
     }
     .disclaimer {
       max-width: 1600px;
       margin: 0 auto;
-      padding: 10px 18px 0;
-      font-size: 12px;
-      line-height: 1.55;
+      padding: 8px 18px 0;
+      font-size: 11px;
+      line-height: 1.38;
       color: #6f675f;
       letter-spacing: 0.01em;
       font-style: italic;
@@ -60,10 +60,10 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 14px;
+      gap: 12px;
+      margin-bottom: 10px;
     }
-    .brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
     .brand img { height: 92px; width: auto; display: block; object-fit: contain; }
     .title-wrap { min-width: 0; }
     .title {
@@ -74,8 +74,8 @@
       margin: 0;
       font-weight: 500;
     }
-    .subtitle { margin-top: 4px; font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--muted); }
-    .actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .subtitle { margin-top: 3px; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+    .actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
     .pill, .button, .input, select {
       border: 1px solid rgba(22,22,22,0.10);
       background: rgba(255,255,255,0.76);
@@ -83,24 +83,24 @@
       border-radius: 999px;
       box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
     }
-    .pill { padding: 11px 14px; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .button { padding: 12px 16px; font-size: 13px; cursor: pointer; }
+    .pill { padding: 9px 12px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .button { padding: 10px 13px; font-size: 12px; cursor: pointer; }
     .button:hover { border-color: rgba(22,22,22,0.18); }
     .button:active { transform: translateY(1px); }
 
     .filterbar {
       display: grid;
-      grid-template-columns: 1.3fr 1fr 1fr 0.85fr;
-      gap: 12px;
-      margin-top: 10px;
+      grid-template-columns: 1.15fr 0.95fr 0.95fr 0.8fr 0.7fr;
+      gap: 8px;
+      margin-top: 8px;
     }
     .field { position: relative; }
-    .field label { display: block; font-size: 11px; color: var(--muted); margin: 0 0 7px 10px; text-transform: uppercase; letter-spacing: 0.16em; }
+    .field label { display: block; font-size: 10px; color: var(--muted); margin: 0 0 5px 10px; text-transform: uppercase; letter-spacing: 0.14em; }
     .input, select {
       width: 100%;
-      min-height: 48px;
-      padding: 0 16px;
-      font-size: 14px;
+      min-height: 42px;
+      padding: 0 14px;
+      font-size: 13px;
       outline: none;
       appearance: none;
       -webkit-appearance: none;
@@ -108,18 +108,18 @@
     .select-wrap::after {
       content: '⌄';
       position: absolute;
-      right: 18px;
-      top: 38px;
+      right: 16px;
+      top: 33px;
       color: var(--muted);
       pointer-events: none;
-      font-size: 18px;
+      font-size: 16px;
     }
     .meta-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      margin-top: 14px;
+      margin-top: 10px;
       flex-wrap: wrap;
     }
     .stats { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -127,8 +127,8 @@
       background: rgba(255,255,255,0.66);
       border: 1px solid rgba(22,22,22,0.08);
       border-radius: 999px;
-      padding: 10px 14px;
-      font-size: 12px;
+      padding: 8px 12px;
+      font-size: 11px;
       color: var(--muted);
     }
     .stat b { color: var(--text); font-weight: 600; }
@@ -341,8 +341,8 @@
     @media (max-width: 640px) {
       .topbar-inner, .chips, .content, .footerhint, .disclaimer { padding-left: 14px; padding-right: 14px; }
       .brand-row { align-items: flex-start; flex-direction: column; }
-      .brand img { height: 78px; }
-      .title { font-size: clamp(20px, 7vw, 28px); }
+      .brand img { height: 92px; }
+      .title { font-size: clamp(19px, 6.4vw, 27px); }
       .grid { gap: 10px; }
       .card { min-height: 210px; border-radius: 20px; }
       .swatch { min-height: 150px; }
@@ -351,16 +351,16 @@
       .name { font-size: 12px; }
       .filterbar {
         display: flex;
-        gap: 10px;
+        gap: 8px;
         overflow-x: auto;
         overflow-y: hidden;
         scrollbar-width: none;
         padding-bottom: 4px;
       }
       .filterbar::-webkit-scrollbar { display: none; }
-      .field { min-width: 220px; flex: 0 0 auto; }
+      .field { min-width: 180px; flex: 0 0 auto; }
       .filterbar .field:last-child { min-width: 150px; }
-      .filterbar .select-wrap::after { top: 39px; }
+      .filterbar .select-wrap::after { top: 33px; }
       .smallmeta { display: none; }
     }
   </style>
@@ -387,9 +387,11 @@ This representation is for indicative purposes only. Kindly contact your sales r
         </div>
 
         <div class="filterbar">
-          <div class="field">
+          <div class="field select-wrap">
             <label for="shadeCardFilter">Shade Card</label>
-            <input class="input" id="shadeCardFilter" list="shadeCardsList" placeholder="Search a shade card" />
+            <select id="shadeCardFilter">
+              <option value="">All shade cards</option>
+            </select>
           </div>
           <div class="field">
             <label for="colorCodeFilter">Color Code</label>
@@ -434,7 +436,6 @@ This representation is for indicative purposes only. Kindly contact your sales r
           <div class="stats" id="searchHint"></div>
         </div>
       </div>
-      <datalist id="shadeCardsList"></datalist>
     </header>
 
     <div class="chips" id="familyChips"></div>
@@ -624,7 +625,7 @@ function deriveFamily(item) {
   const { h, s, l } = hexToHsl(item.hex);
 
   // Very pale or almost neutral shades stay in the neutral family.
-  if (l >= 0.80 && s <= 0.38) return 'Whites & Neutrals';
+  if (l >= 0.92 && s <= 0.28) return 'Whites & Neutrals';
   if (s <= 0.12) return l >= 0.72 ? 'Whites & Neutrals' : 'Greys & Blacks';
 
   // Hue-driven families with a slightly stricter split so pinks, browns and yellows do not bleed into each other.
@@ -671,13 +672,13 @@ function deriveCharacter(item) {
     const colourNameFilter = document.getElementById('colourNameFilter');
     const characterFilter = document.getElementById('characterFilter');
     const sortBy = document.getElementById('sortBy');
-    const shadeCardsList = document.getElementById('shadeCardsList');
 
     totalCount.textContent = raw.length.toLocaleString();
     [...new Set(raw.map(r => r.shadeCard).filter(Boolean))].sort().forEach(v => {
       const opt = document.createElement('option');
       opt.value = v;
-      shadeCardsList.appendChild(opt);
+      opt.textContent = v;
+      shadeCardFilter.appendChild(opt);
     });
 
     raw.forEach(item => {
@@ -741,7 +742,7 @@ function deriveCharacter(item) {
       let arr = raw.filter(item => {
         if (state.family !== 'All' && item.family !== state.family) return false;
         if (state.character !== 'All' && item.character !== state.character) return false;
-        if (q1 && !item.shadeCard.toLowerCase().includes(q1)) return false;
+        if (q1 && item.shadeCard !== state.queryShadeCard) return false;
         if (q2 && !item.colorCode.toLowerCase().includes(q2)) return false;
         if (q3 && !item.colourName.toLowerCase().includes(q3)) return false;
         return true;
@@ -1002,7 +1003,7 @@ function deriveCharacter(item) {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateItem(parseInt(card.dataset.index, 10)); }
     });
 
-    shadeCardFilter.addEventListener('input', e => { state.queryShadeCard = e.target.value; rerender(true); });
+    shadeCardFilter.addEventListener('change', e => { state.queryShadeCard = e.target.value; rerender(true); });
     colorCodeFilter.addEventListener('input', e => { state.queryColorCode = e.target.value; rerender(true); });
     colourNameFilter.addEventListener('input', e => { state.queryColourName = e.target.value; rerender(true); });
     characterFilter.addEventListener('change', e => { state.character = e.target.value; rerender(true); });
