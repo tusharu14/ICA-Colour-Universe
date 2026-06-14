@@ -64,17 +64,17 @@
       margin-bottom: 14px;
     }
     .brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
-    .brand img { height: 72px; width: auto; display: block; object-fit: contain; }
+    .brand img { height: 92px; width: auto; display: block; object-fit: contain; }
     .title-wrap { min-width: 0; }
     .title {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(24px, 2.4vw, 34px);
+      font-size: clamp(22px, 2.0vw, 30px);
       line-height: 1;
       letter-spacing: 0.02em;
       margin: 0;
       font-weight: 500;
     }
-    .subtitle { margin-top: 3px; font-size: 10px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--muted); }
+    .subtitle { margin-top: 4px; font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--muted); }
     .actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
     .pill, .button, .input, select {
       border: 1px solid rgba(22,22,22,0.10);
@@ -164,7 +164,7 @@
       margin: 0 auto;
       padding: 18px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 320px;
+      grid-template-columns: minmax(0, 1fr) 292px;
       gap: 18px;
       align-items: start;
     }
@@ -220,7 +220,7 @@
     .hex { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: var(--muted); margin-top: 4px; }
     .name { font-size: 13px; color: var(--text); line-height: 1.35; min-height: 18px; }
     .smallmeta { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; }
-    .familytag {
+    .familytag, .charactertag {
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -235,6 +235,8 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    .familytag { background: #faf8f3; }
+    .charactertag { background: #f4f2ee; color: #5f5b55; }
     .familydot { width: 7px; height: 7px; border-radius: 50%; background: var(--swatch, #aaa); box-shadow: 0 0 0 2px rgba(255,255,255,0.9); }
 
     .sidebar {
@@ -339,15 +341,26 @@
     @media (max-width: 640px) {
       .topbar-inner, .chips, .content, .footerhint, .disclaimer { padding-left: 14px; padding-right: 14px; }
       .brand-row { align-items: flex-start; flex-direction: column; }
-      .brand img { height: 58px; }
-      .title { font-size: clamp(22px, 8vw, 30px); }
+      .brand img { height: 78px; }
+      .title { font-size: clamp(20px, 7vw, 28px); }
       .grid { gap: 10px; }
       .card { min-height: 210px; border-radius: 20px; }
       .swatch { min-height: 150px; }
       .details { padding: 12px; min-height: 80px; }
       .code { font-size: 16px; }
       .name { font-size: 12px; }
-      .filterbar { grid-template-columns: 1fr; gap: 10px; }
+      .filterbar {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        padding-bottom: 4px;
+      }
+      .filterbar::-webkit-scrollbar { display: none; }
+      .field { min-width: 220px; flex: 0 0 auto; }
+      .filterbar .field:last-child { min-width: 150px; }
+      .filterbar .select-wrap::after { top: 39px; }
       .smallmeta { display: none; }
     }
   </style>
@@ -387,6 +400,20 @@ This representation is for indicative purposes only. Kindly contact your sales r
             <input class="input" id="colourNameFilter" placeholder="Search name" />
           </div>
           <div class="field select-wrap">
+            <label for="characterFilter">Character</label>
+            <select id="characterFilter">
+              <option value="All">All</option>
+              <option value="Neutral">Neutral</option>
+              <option value="Pastel">Pastel</option>
+              <option value="Earthy">Earthy</option>
+              <option value="Muted">Muted</option>
+              <option value="Deep">Deep</option>
+              <option value="Vibrant">Vibrant</option>
+              <option value="Warm">Warm</option>
+              <option value="Cool">Cool</option>
+            </select>
+          </div>
+          <div class="field select-wrap">
             <label for="sortBy">Sort</label>
             <select id="sortBy">
               <option value="relevance">Relevance</option>
@@ -422,13 +449,14 @@ This representation is for indicative purposes only. Kindly contact your sales r
       <aside class="sidebar" aria-live="polite">
         <div class="inspector" id="inspectorDesktop">
           <h2>Pick a shade</h2>
-          <p class="lead">Tap any tile to inspect the shade card, code, name, family and HEX values. On mobile, the same detail view opens as a bottom sheet.</p>
+          <p class="lead">Tap any tile to inspect the shade card, code, name, family, character and HEX values. On mobile, the same detail view opens as a bottom sheet.</p>
           <div class="hero-swatch" style="--hero:#ddd"></div>
           <div class="inspector-grid">
             <div class="kv"><div>Shade Card</div><div>—</div></div>
             <div class="kv"><div>Color Code</div><div>—</div></div>
             <div class="kv"><div>Colour Name</div><div>—</div></div>
             <div class="kv"><div>Family</div><div>—</div></div>
+            <div class="kv"><div>Character</div><div>—</div></div>
             <div class="kv"><div>HEX</div><div>—</div></div>
           </div>
         </div>
@@ -436,7 +464,7 @@ This representation is for indicative purposes only. Kindly contact your sales r
     </main>
 
     <div class="footerhint">
-      Use the search fields to narrow the universe, then move through results by scrolling. Each shade opens into a detailed inspector with one-tap copy actions.
+      Use the search fields and families to narrow the universe, then move through results by scrolling. Each shade opens into a detailed inspector with one-tap copy actions.
     </div>
   </div>
 
@@ -455,6 +483,7 @@ This representation is for indicative purposes only. Kindly contact your sales r
       queryColorCode: '',
       queryColourName: '',
       family: 'All',
+      character: 'All',
       sortBy: 'relevance',
       shown: 0,
       visible: [],
@@ -465,72 +494,131 @@ This representation is for indicative purposes only. Kindly contact your sales r
 
 const FAMILY_ORDER = [
   'Whites & Neutrals',
-  'Greys & Charcoal',
-  'Warm Earths',
+  'Greys & Blacks',
   'Yellows & Golds',
+  'Oranges & Browns',
   'Reds & Pinks',
   'Purples & Violets',
   'Blues & Teals',
   'Greens & Olives',
 ];
 
+const CHARACTER_ORDER = [
+  'Neutral',
+  'Pastel',
+  'Earthy',
+  'Muted',
+  'Deep',
+  'Vibrant',
+  'Warm',
+  'Cool',
+];
+
 const FAMILY_COLORS = {
   'All': '#171717',
   'Whites & Neutrals': '#d9d2c7',
-  'Greys & Charcoal': '#6f6b66',
-  'Warm Earths': '#a56d46',
+  'Greys & Blacks': '#6f6b66',
   'Yellows & Golds': '#d8b132',
+  'Oranges & Browns': '#a56d46',
   'Reds & Pinks': '#c25357',
   'Purples & Violets': '#8d6bb4',
   'Blues & Teals': '#558ab5',
   'Greens & Olives': '#6b8b53',
 };
 
-function rgbToHsl(r, g, b) {
-  r /= 255; g /= 255; b /= 255;
-  const max = Math.max(r, g, b), min = Math.min(r, g, b);
-  const l = (max + min) / 2;
-  const d = max - min;
-  let h = 0;
-  let s = 0;
-  if (d !== 0) {
-    s = d / (1 - Math.abs(2 * l - 1));
-    switch (max) {
-      case r: h = ((g - b) / d + (g < b ? 6 : 0)); break;
-      case g: h = ((b - r) / d + 2); break;
-      default: h = ((r - g) / d + 4); break;
-    }
-    h *= 60;
-  }
-  return { h, s, l };
+const CHARACTER_COLORS = {
+  'All': '#171717',
+  'Neutral': '#8c857c',
+  'Pastel': '#c9aa7e',
+  'Earthy': '#9a6f4f',
+  'Muted': '#8a8e92',
+  'Deep': '#4f4b55',
+  'Vibrant': '#aa5460',
+  'Warm': '#c07a3d',
+  'Cool': '#4d87b5',
+};
+
+function hexToRgb(hex) {
+  const v = hex.replace('#','').trim();
+  return {
+    r: parseInt(v.slice(0, 2), 16),
+    g: parseInt(v.slice(2, 4), 16),
+    b: parseInt(v.slice(4, 6), 16),
+  };
+}
+
+function rgbToXyz(r, g, b) {
+  const srgb = [r, g, b].map(v => {
+    v /= 255;
+    return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+  });
+  const [R, G, B] = srgb;
+  return {
+    x: (R * 0.4124564 + G * 0.3575761 + B * 0.1804375) * 100,
+    y: (R * 0.2126729 + G * 0.7151522 + B * 0.0721750) * 100,
+    z: (R * 0.0193339 + G * 0.1191920 + B * 0.9503041) * 100,
+  };
+}
+
+function xyzToLab(x, y, z) {
+  const refX = 95.047;
+  const refY = 100.000;
+  const refZ = 108.883;
+  let fx = x / refX;
+  let fy = y / refY;
+  let fz = z / refZ;
+  const e = 0.008856;
+  const k = 903.3;
+  const f = v => (v > e ? Math.cbrt(v) : (k * v + 16) / 116);
+  fx = f(fx); fy = f(fy); fz = f(fz);
+  return {
+    l: 116 * fy - 16,
+    a: 500 * (fx - fy),
+    b: 200 * (fy - fz),
+  };
+}
+
+function hexToLab(hex) {
+  const { r, g, b } = hexToRgb(hex);
+  return xyzToLab(...Object.values(rgbToXyz(r, g, b)));
+}
+
+function labToChromaHue(lab) {
+  const c = Math.sqrt(lab.a * lab.a + lab.b * lab.b);
+  let h = Math.atan2(lab.b, lab.a) * 180 / Math.PI;
+  if (h < 0) h += 360;
+  return { c, h };
 }
 
 function deriveFamily(item) {
-  const { r, g, b } = hexToRgb(item.hex);
-  const { h, s, l } = rgbToHsl(r, g, b);
+  const lab = hexToLab(item.hex);
+  const { l, c, h } = labToChromaHue(lab);
 
-  if (l >= 0.82 && s <= 0.32) return 'Whites & Neutrals';
-  if (s <= 0.14) {
-    return l >= 0.68 ? 'Whites & Neutrals' : 'Greys & Charcoal';
-  }
-  if (s <= 0.22 && l < 0.68) {
-    if (h >= 20 && h < 55 && s > 0.16) return 'Warm Earths';
-    return 'Greys & Charcoal';
+  if (c < 7.5) {
+    return l >= 72 ? 'Whites & Neutrals' : 'Greys & Blacks';
   }
 
-  if (h < 18 || h >= 345) {
-    if (l < 0.60 && s < 0.68) return 'Warm Earths';
-    return 'Reds & Pinks';
-  }
-  if (h < 45) {
-    if (l < 0.64 || s < 0.48) return 'Warm Earths';
-    return 'Yellows & Golds';
-  }
-  if (h < 80) return 'Yellows & Golds';
-  if (h < 160) return 'Greens & Olives';
-  if (h < 245) return 'Blues & Teals';
-  if (h < 300) return 'Purples & Violets';
+  // Keep hue bands broad for an intuitive catalogue; warm yellows stay in yellow.
+  if (h >= 344 || h < 20) return 'Reds & Pinks';
+  if (h >= 20 && h < 45) return 'Oranges & Browns';
+  if (h >= 45 && h < 90) return 'Yellows & Golds';
+  if (h >= 90 && h < 170) return 'Greens & Olives';
+  if (h >= 170 && h < 255) return 'Blues & Teals';
+  if (h >= 255 && h < 344) return 'Purples & Violets';
   return 'Reds & Pinks';
+}
+
+function deriveCharacter(item) {
+  const lab = hexToLab(item.hex);
+  const { l, c, h } = labToChromaHue(lab);
+
+  if (c < 7.5) return 'Neutral';
+  if (l >= 80 && c < 34) return 'Pastel';
+  if (l <= 35 && c >= 12) return 'Deep';
+  if (h >= 20 && h < 95 && c < 34 && l < 70) return 'Earthy';
+  if (c < 18) return 'Muted';
+  if (c >= 36 && l >= 40 && l <= 78) return 'Vibrant';
+  return (h >= 25 && h < 185) ? 'Warm' : 'Cool';
 }
 
     const families = ['All', ...FAMILY_ORDER];
@@ -552,6 +640,7 @@ function deriveFamily(item) {
     const shadeCardFilter = document.getElementById('shadeCardFilter');
     const colorCodeFilter = document.getElementById('colorCodeFilter');
     const colourNameFilter = document.getElementById('colourNameFilter');
+    const characterFilter = document.getElementById('characterFilter');
     const sortBy = document.getElementById('sortBy');
     const shadeCardsList = document.getElementById('shadeCardsList');
 
@@ -564,12 +653,16 @@ function deriveFamily(item) {
 
     raw.forEach(item => {
       item.family = deriveFamily(item);
+      item.character = deriveCharacter(item);
     });
 
     function familyColor(label) {
       return FAMILY_COLORS[label] || '#8a6d47';
     }
 
+    function characterColor(label) {
+      return CHARACTER_COLORS[label] || '#7b7268';
+    }
 
     function escapeHtml(str) {
       return String(str)
@@ -608,6 +701,7 @@ function deriveFamily(item) {
       if (q2 && item.colorCode.toLowerCase().includes(q2)) s += 5;
       if (q3 && item.colourName.toLowerCase().includes(q3)) s += 5;
       if (state.family !== 'All' && item.family === state.family) s += 1;
+      if (state.character !== 'All' && item.character === state.character) s += 1;
       return s;
     }
 
@@ -617,6 +711,7 @@ function deriveFamily(item) {
       const q3 = state.queryColourName.trim().toLowerCase();
       let arr = raw.filter(item => {
         if (state.family !== 'All' && item.family !== state.family) return false;
+        if (state.character !== 'All' && item.character !== state.character) return false;
         if (q1 && !item.shadeCard.toLowerCase().includes(q1)) return false;
         if (q2 && !item.colorCode.toLowerCase().includes(q2)) return false;
         if (q3 && !item.colourName.toLowerCase().includes(q3)) return false;
@@ -655,7 +750,7 @@ function deriveFamily(item) {
       const familyBg = familyColor(item.family);
       const name = item.colourName ? escapeHtml(item.colourName) : '<span style="color:var(--muted)">No colour name</span>';
       return `
-        <article class="card" tabindex="0" role="button" aria-label="${escapeHtml(item.shadeCard)} ${escapeHtml(item.colorCode)} ${escapeHtml(item.colourName || '')}"
+        <article class="card" tabindex="0" role="button" aria-label="${escapeHtml(item.shadeCard)} ${escapeHtml(item.colorCode)} ${escapeHtml(item.colourName || '')} ${escapeHtml(item.family)} ${escapeHtml(item.character)}"
           data-id="${item.id}" data-index="${index}" style="--swatch:${item.hex}; --hero:${item.hex};">
           <div class="swatch"></div>
           <div class="details">
@@ -670,7 +765,7 @@ function deriveFamily(item) {
               </div>
             </div>
             <div class="name">${name}</div>
-            <div class="smallmeta"><span>${escapeHtml(item.shadeCard)}</span><span>${item.id.toString().padStart(4,'0')}</span></div>
+            <div class="smallmeta"><span>${escapeHtml(item.shadeCard)}</span><span>${escapeHtml(item.character)}</span></div>
           </div>
         </article>`;
     }
@@ -703,6 +798,7 @@ function deriveFamily(item) {
       progressPill.textContent = `${Math.min(state.shown, list.length).toLocaleString()} / ${list.length.toLocaleString()} shades`;
       const hint = [];
       if (state.family !== 'All') hint.push(`Family: ${state.family}`);
+      if (state.character !== 'All') hint.push(`Character: ${state.character}`);
       if (state.queryShadeCard.trim()) hint.push(`Shade Card: ${state.queryShadeCard.trim()}`);
       if (state.queryColorCode.trim()) hint.push(`Code: ${state.queryColorCode.trim()}`);
       if (state.queryColourName.trim()) hint.push(`Name: ${state.queryColourName.trim()}`);
@@ -759,13 +855,14 @@ function deriveFamily(item) {
       if (!item) {
         const neutral = `
           <h2>Pick a shade</h2>
-          <p class="lead">Tap any tile to inspect the shade card, code, name, family and HEX values. On mobile, the same detail view opens as a bottom sheet.</p>
+          <p class="lead">Tap any tile to inspect the shade card, code, name, family, character and HEX values. On mobile, the same detail view opens as a bottom sheet.</p>
           <div class="hero-swatch" style="--hero:#ddd"></div>
           <div class="inspector-grid">
             <div class="kv"><div>Shade Card</div><div>—</div></div>
             <div class="kv"><div>Color Code</div><div>—</div></div>
             <div class="kv"><div>Colour Name</div><div>—</div></div>
             <div class="kv"><div>Family</div><div>—</div></div>
+            <div class="kv"><div>Character</div><div>—</div></div>
             <div class="kv"><div>HEX</div><div>—</div></div>
           </div>`;
         inspectorDesktop.innerHTML = neutral;
@@ -781,6 +878,7 @@ function deriveFamily(item) {
           <div class="kv"><div>Color Code</div><div>${escapeHtml(item.colorCode)}</div></div>
           <div class="kv"><div>Colour Name</div><div>${item.colourName ? escapeHtml(item.colourName) : '—'}</div></div>
           <div class="kv"><div>Family</div><div>${escapeHtml(item.family)}</div></div>
+          <div class="kv"><div>Character</div><div>${escapeHtml(item.character)}</div></div>
           <div class="kv"><div>HEX</div><div>${escapeHtml(item.hex)}</div></div>
         </div>
         <div class="copyrow">
@@ -816,6 +914,7 @@ function deriveFamily(item) {
           <div class="kv"><div>Color Code</div><div>${escapeHtml(item.colorCode)}</div></div>
           <div class="kv"><div>Colour Name</div><div>${item.colourName ? escapeHtml(item.colourName) : '—'}</div></div>
           <div class="kv"><div>Family</div><div>${escapeHtml(item.family)}</div></div>
+          <div class="kv"><div>Character</div><div>${escapeHtml(item.character)}</div></div>
           <div class="kv"><div>HEX</div><div>${escapeHtml(item.hex)}</div></div>
         </div>
         <div class="copyrow">
@@ -877,16 +976,19 @@ function deriveFamily(item) {
     shadeCardFilter.addEventListener('input', e => { state.queryShadeCard = e.target.value; rerender(true); });
     colorCodeFilter.addEventListener('input', e => { state.queryColorCode = e.target.value; rerender(true); });
     colourNameFilter.addEventListener('input', e => { state.queryColourName = e.target.value; rerender(true); });
+    characterFilter.addEventListener('change', e => { state.character = e.target.value; rerender(true); });
     sortBy.addEventListener('change', e => { state.sortBy = e.target.value; rerender(true); });
     clearBtn.addEventListener('click', () => {
       state.queryShadeCard = '';
       state.queryColorCode = '';
       state.queryColourName = '';
       state.family = 'All';
+      state.character = 'All';
       state.sortBy = 'relevance';
       shadeCardFilter.value = '';
       colorCodeFilter.value = '';
       colourNameFilter.value = '';
+      characterFilter.value = 'All';
       sortBy.value = 'relevance';
       updateChips();
       rerender(true);
